@@ -1,24 +1,37 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { Task } from './components/DataTable.model';
+import DataTable from './components/DataTable';
+import { DEFAULT_PAGE_SIZE } from './components/Datatable.util';
 
 function App() {
+
+  const data: Task[] = [
+    {
+      id: 1, name: "Wash clothes", done: true, doneDate: (new Date("06/25/2024"))
+    },
+    {
+      id: 2, name: "Sweep floor", done: false, doneDate: null
+    },
+    {
+      id: 3, name: "Trim grass", done: false, doneDate: null
+    },
+    {
+      id: 4, name: "Go to grocery", done: true, doneDate: (new Date("06/15/2024"))
+    },
+    {
+      id: 5, name: "Dental checkup", done: true, doneDate: (new Date("06/18/2024"))
+    },
+    {
+      id: 6, name: "Process documents", done: false, doneDate: null
+    }
+  ];
+
+  const columns = ["Task Id", "Name", "Date done", "Status", "Action"];
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <DataTable pageSize={DEFAULT_PAGE_SIZE} columns={columns} data={data} />
     </div>
   );
 }
