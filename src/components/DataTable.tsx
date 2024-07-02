@@ -9,6 +9,8 @@ import {
 import {
   DEFAULT_FIRST_PAGE,
   DEFAULT_PAGE_SIZE,
+  firstDataIndex,
+  lastDataIndex,
   onSort,
   sortedData,
 } from "./Datatable.util";
@@ -21,37 +23,35 @@ const DataTable = ({
   columns,
   pageSize,
 }: DataTableParams): ReactElement => {
+  
   const initialData = data.slice(0, DEFAULT_PAGE_SIZE);
-
   const [tasks, setTask] = useState<Task[]>(initialData);
   const [currentPage, setCurrentPage] = useState<number>(DEFAULT_FIRST_PAGE);
   const [sortConfig, setSortConfig] = useState<SortConfig>({
     key: "name",
     direction: Sorting.ASC,
   });
-  const [firstIndex, setFirstIndex] = useState<number>(
-    (currentPage - 1) * DEFAULT_PAGE_SIZE
-  );
-  const [lastIndex, setLastIndex] = useState<number>(
-    firstIndex + DEFAULT_PAGE_SIZE
-  );
+
+  const [firstIndex, setFirstIndex] = useState<number>(firstDataIndex(currentPage));
+  const [lastIndex, setLastIndex] = useState<number>(lastDataIndex(firstIndex));
 
   const handlePageChange = useCallback((pageNumber: number) => {
  
     if (pageNumber == currentPage) return;
 
-    const FirstIn = (pageNumber - 1) * DEFAULT_PAGE_SIZE;
-    const lastIn = (pageNumber - 1) * DEFAULT_PAGE_SIZE + DEFAULT_PAGE_SIZE;
+    const firstIn = firstDataIndex(pageNumber);
+    const lastIn = lastDataIndex(firstIn);
+
     const newTasks = data as Task[];
 
     setCurrentPage(pageNumber);
-    setFirstIndex(firstIndex);
+    setFirstIndex(firstIn);
     setLastIndex(lastIn);
 
     const currentData = sortedData({
       tasks: newTasks,
       sortConfig: sortConfig,
-    }).slice(FirstIn, lastIn);
+    }).slice(firstIn, lastIn);
 
     setTask(currentData);
 

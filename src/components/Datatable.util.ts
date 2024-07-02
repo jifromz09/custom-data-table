@@ -52,3 +52,11 @@ export const onSort = ({
   );
   setTask(currentData);
 };
+
+export const firstDataIndex = (currentPage: number): number => {
+  return  (currentPage - 1) * DEFAULT_PAGE_SIZE;
+}
+
+export const lastDataIndex = (firstIndex: number): number => {
+  return  firstIndex + DEFAULT_PAGE_SIZE;
+}
