@@ -1,27 +1,29 @@
-import React, { ReactElement } from 'react';
-import { IHandleSortParam, SortConfig, Sorting } from './DataTable.model';
+import { ReactElement } from "react";
+import { Column } from "./DataTable.model";
 
 export interface ITableHeaderParam {
-  columns: string[],
-  sortConfig: SortConfig
-  onSort: (key: string) => void
+  columns: Column[];
+  onSort: (key: string) => void;
 }
 
-const TableHeader = ({ columns, sortConfig, onSort }: ITableHeaderParam): ReactElement => {
-
-  const handleOnclick = (e: any, headerName: string) => {
+const TableHeader = ({ columns, onSort }: ITableHeaderParam): ReactElement => {
+  const handleOnclick = (e: any, column: Column) => {
     e.preventDefault();
-    onSort(headerName);
-  }
+    onSort(column.accessor);
+  };
 
   return (
     <thead>
-      <tr>{
-        columns.map((col, index) =>
-          <th key={index} onClick={e => handleOnclick(e, col)}>{`${col}`}</th>
-        )}
-      </tr></thead>
-  )
-}
+      <tr>
+        {columns.map(({ label, accessor }, index) => (
+          <th
+            key={accessor}
+            onClick={(e) => handleOnclick(e, columns[index])}
+          >{`${label}`}</th>
+        ))}
+      </tr>
+    </thead>
+  );
+};
 
 export default TableHeader;

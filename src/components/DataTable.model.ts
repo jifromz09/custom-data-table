@@ -5,10 +5,15 @@ export type Task = {
     doneDate?: Date | null
 };
 
+export type Column = {
+    label: string,
+    accessor: string
+}
+
 export type DataTableParams = {
     initialSortBy?: any
     pageSize: number,
-    columns: string[],
+    columns: Column[],
     data: Task[]
 };
 
@@ -26,7 +31,11 @@ export enum Sorting {
 export interface IHandleSortParam {
     key: string,
     setSortConfig: (sortConfig: SortConfig) => void,
-    sortConfig: SortConfig
+    sortConfig: SortConfig,
+    tasks: Task[],
+    firstIndex: number,
+    lastIndex: number,
+    setTask: (tasks: Task[]) => void
 }
 
 export interface IHandlePageChangeParam {
@@ -42,6 +51,6 @@ export interface IHandleRowSelect {
 }
 
 export interface ISortedDataParam {
-    data: Task[],
+    tasks: Task[],
     sortConfig?: SortConfig
 }
