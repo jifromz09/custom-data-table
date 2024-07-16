@@ -1,11 +1,11 @@
-import { Task } from "../components/DataTable.model";
+import { Task } from "../components/models/DataTable.model";
 
 export const taskData: Task[] = [
   {
     id: 1,
     name: "Wash clothes",
     done: true,
-    doneDate: new Date("06/25/2024"),
+    doneDate: "",
   },
   {
     id: 2,
@@ -23,13 +23,13 @@ export const taskData: Task[] = [
     id: 4,
     name: "Go to grocery",
     done: true,
-    doneDate: new Date("06/15/2024"),
+    doneDate: "",
   },
   {
     id: 5,
     name: "Dental checkup",
     done: true,
-    doneDate: new Date("06/18/2024"),
+    doneDate: "",
   },
   {
     id: 6,
@@ -49,5 +49,6 @@ export const columns = [
   { label: "Task Id", accessor: "id" },
   { label: "Name", accessor: "name" },
   { label: "Date completed", accessor: "doneDate" },
-  { label: "Status", accessor: "done" }
+  { label: "Status", accessor: "done" },
+  { label: "Actions", accessor: null }
 ];

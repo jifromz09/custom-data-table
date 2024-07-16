@@ -1,9 +1,9 @@
-import React, { ReactNode, ReactElement, memo } from "react";
+import { ReactNode, ReactElement } from "react";
 
 type ButtonType = "button" | "submit" | "reset" | undefined;
 
 export interface ButtonProps {
-  onClick: (e: any) => void;
+  onClick?: (e: any) => void | undefined;
   children: ReactNode;
   styles: string;
   type?: ButtonType;
@@ -15,9 +15,15 @@ const Button = ({
   children,
   styles,
   disabled,
+  type,
 }: ButtonProps): ReactElement => {
   return (
-    <button className={`${styles}`} disabled={disabled} onClick={onClick}>
+    <button
+      type={type}
+      className={`${styles}`}
+      disabled={disabled}
+      onClick={onClick}
+    >
       {children}
     </button>
   );

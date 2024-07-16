@@ -1,11 +1,13 @@
 import { ReactElement } from "react";
-import { DEFAULT_FIRST_PAGE } from "./Datatable.util";
-import Button from "./Button";
+import { DEFAULT_FIRST_PAGE } from "../Datatable.util";
+import Button from "../shared/Button";
+import { useDispatch, useSelector } from "react-redux";
+import { setCurrentPage } from "../../data/taskSlice";
 
 export interface IPaginationParam {
   pageSize?: number;
   totalItems?: number;
-  onPageChange: (pageNumber: number) => void;
+  onPageChange: (page: number) => void;
 }
 
 const Pagination = ({
@@ -13,6 +15,8 @@ const Pagination = ({
   totalItems,
   onPageChange,
 }: IPaginationParam): ReactElement => {
+  
+  const currentPage = useSelector((state: any) => state.tasks.currentPage);
   const paginationNumbers = [];
 
   const lastPage = Math.ceil(totalItems / pageSize);
@@ -23,6 +27,9 @@ const Pagination = ({
 
   const handlePageClick = (e: any, pageNumber: number) => {
     e.preventDefault();
+
+    if (pageNumber === currentPage) return;
+
     onPageChange(pageNumber);
   };
 
@@ -30,13 +37,15 @@ const Pagination = ({
     <div className="pagination">
       {/**You can pass different style in each button */}
       <Button
+        type="button"
         styles={`pagination-button`}
         onClick={(e) => handlePageClick(e, DEFAULT_FIRST_PAGE)}
       >
-        {`<`}
+        {`<<`}
       </Button>
       {paginationNumbers.map((pageNumber) => (
         <Button
+          type="button"
           styles={`pagination-button`}
           key={pageNumber}
           onClick={(e) => handlePageClick(e, pageNumber)}
@@ -45,9 +54,10 @@ const Pagination = ({
         </Button>
       ))}
       <Button
+        type="button"
         styles={`pagination-button`}
         onClick={(e) => handlePageClick(e, lastPage)}
-      >{`>`}</Button>
+      >{`>>`}</Button>
     </div>
   );
 };

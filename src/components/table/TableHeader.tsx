@@ -1,5 +1,5 @@
 import { ReactElement } from "react";
-import { Column } from "./DataTable.model";
+import { Column } from "../models/DataTable.model";
 
 export interface ITableHeaderParam {
   columns: Column[];
