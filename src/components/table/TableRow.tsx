@@ -12,20 +12,20 @@ const TableRow = ({ task, onDelete, onUpdate }: ITableRowParam): ReactElement =>
  
   const handleUpdate = (e: any, task: Task) => {
     e?.stopPropagation();
-    onUpdate(task)
+    onUpdate(task);
   };
 
   const handleDelete = (e: any, task: Task) => {
     e?.stopPropagation();
-    onDelete(task)
+    onDelete(task);
   };
 
   return (
     <tr>
       <td>{task.id}</td>
       <td>{task.name}</td>
-      <td>{task.doneDate ? task.doneDate : ""}</td>
       <td>{task.done ? "Completed" : "To do"}</td>
+      <td>{task.doneDate ? task.doneDate : ""}</td>
       <td>
         <div className="action-button-container">
           <Button styles={""} onClick={(e) => handleUpdate(e, task)}>

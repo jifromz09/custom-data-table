@@ -22,6 +22,7 @@ const TaskDetailForm = (): ReactElement => {
 
     if (!inputRef.current.value) return;
 
+    // Assign id to task
     const id = !initialTasks.length
       ? 1
       : initialTasks[initialTasks.length - 1].id + 1;

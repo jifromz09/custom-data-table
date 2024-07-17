@@ -39,6 +39,8 @@ const taskSlice = createSlice({
     },
     updateTaskStatus: (state, action) => {
       const { payload } = action;
+
+      // Set current date as date completion
       const newTaskState = [
         ...state.tasks.map((task: Task) => {
           if (task.id === payload.id) {
@@ -58,6 +60,7 @@ const taskSlice = createSlice({
     sortTasks: (state, action) => {
       const { payload } = action;
  
+      // Sort table data by 'name' or 'status' field in asc or desc
       let data = [...state.tasks].sort((a, b) => {
         if (!payload || !payload?.key) return 0;
     

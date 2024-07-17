@@ -48,7 +48,7 @@ export const taskData: Task[] = [
 export const columns = [
   { label: "Task Id", accessor: "id" },
   { label: "Name", accessor: "name" },
-  { label: "Date completed", accessor: "doneDate" },
   { label: "Status", accessor: "done" },
+  { label: "Date completed", accessor: "doneDate" },
   { label: "Actions", accessor: null }
 ];

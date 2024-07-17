@@ -1,8 +1,5 @@
 import { ReactElement, useState, useEffect, useCallback } from "react";
-import {
-  Sorting,
-  Task,
-} from "./models/DataTable.model";
+import { Sorting, Task } from "./models/DataTable.model";
 import {
   DEFAULT_FIRST_PAGE,
   DEFAULT_PAGE_SIZE,
@@ -23,10 +20,14 @@ import {
 } from "../data/taskSlice";
 
 const DataTable = (): ReactElement => {
+
   const initialTasks = useSelector((state: any) => state.tasks.tasks);
   const currentPage = useSelector((state: any) => state.tasks.currentPage);
   const sortConfig = useSelector((state: any) => state.tasks.sortConfig);
 
+  const dispatch = useDispatch();
+
+  // Set first and last index for per page display
   const firstIndex = firstDataIndex(currentPage);
   const lastIndex = lastDataIndex(firstIndex);
 
@@ -34,10 +35,9 @@ const DataTable = (): ReactElement => {
     currentPage === DEFAULT_FIRST_PAGE
       ? initialTasks.slice(0, DEFAULT_PAGE_SIZE)
       : initialTasks.slice(firstIndex, lastIndex);
-  const dispatch = useDispatch();
 
   const [tasks, setTask] = useState<Task[]>([...initialData]);
-  
+
   const handlePageChange = useCallback(
     (pageNumber: number) => {
       dispatch(setCurrentPage(pageNumber));
@@ -46,9 +46,10 @@ const DataTable = (): ReactElement => {
   );
 
   const handleSort = (key: string): void => {
-
+   
     if (initialTasks.length === 1 || !key || key === "id") return;
- 
+    
+    // Initialize new sorting config
     const newSortConfig = {
       key,
       direction:
@@ -58,7 +59,7 @@ const DataTable = (): ReactElement => {
           ? Sorting.DESC
           : Sorting.ASC,
     };
-  
+
     dispatch(sortTasks(newSortConfig));
   };
 
@@ -74,7 +75,6 @@ const DataTable = (): ReactElement => {
   };
 
   useEffect(() => {
-
     if (JSON.stringify(tasks) !== JSON.stringify(initialData)) {
       setTask([...initialData]);
     }
